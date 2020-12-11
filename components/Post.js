@@ -7,7 +7,7 @@ function Post({ date, image, title }) {
       <div className="description">{description}</div>
       <div className="text">
         <h2>{title}</h2>
-        <h3>{date.substring(0, 10)}</h3>
+        {/* <h3>{date.substring(0, 10)}</h3> */}
       </div>
 
       <style jsx>{`
