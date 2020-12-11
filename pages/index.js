@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { useState, useEffect } from 'react';
 
 import { fetchEntries } from '@utils/contentfulPosts'
 
@@ -7,6 +8,13 @@ import Footer from '@components/Footer'
 import Post from '@components/Post'
 
 export default function Home({ posts }) {
+  var [count, setCount] = useState(0);
+
+  useEffect(() => {
+    setInterval(() => {
+      setCount(count++);
+    }, 1000);
+  }, []);
   return (
     <div className="container">
       <Head>
@@ -16,6 +24,9 @@ export default function Home({ posts }) {
 
       <main>
         <Header />
+        <div>
+          {count}
+        </div>
         <div className="posts">
           {posts.map((p) => {
             return <Post key={p.date} date={p.date} image={p.image.fields} title={p.title} />
