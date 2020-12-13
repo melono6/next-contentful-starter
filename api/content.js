@@ -10,18 +10,16 @@ const client = require('contentful').createClient({
 exports.handler = async function(event, context) {
     // your server-side functionality
     const {identity, user} = context.clientContext;
-    const entries = await client.getEntries()
-    if (entries.items) {
-        return {
-            statusCode: 200,
-            body: JSON.stringify({content: entries.items});
-        }
-    }
 
     if (user) {
         // logged in
-        
-        
+        const entries = await client.getEntries()
+        if (entries.items) {
+            return {
+                statusCode: 200,
+                body: JSON.stringify({content: entries.items})
+            }
+        }
     } else {
         return {
             statusCode: 403,
