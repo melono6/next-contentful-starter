@@ -12,13 +12,20 @@ import Post from '@components/Post'
 
 export default function Home({ posts }) {
   var [count, setCount] = useState(0);
+  var [user, setUser] = useState(null);
 
   useEffect(() => {
+    netlifyIdentity.on('init', user => {
+      console.log('init', user)
+      setUser(user);
+    });
     netlifyIdentity.init({
       locale: 'en' // defaults to 'en'
     });
-
-    netlifyIdentity.on('login', user => console.log('login', user));
+    netlifyIdentity.on('login', user => {
+      console.log('login', user)
+      setUser(user);
+    });
     setInterval(() => {
       setCount(count++);
     }, 1000);
@@ -33,10 +40,36 @@ export default function Home({ posts }) {
       <main>
         <Header />
         <div>
-          <a href="" onClick={(e) => {
+          {!user ? (<a href="" onClick={(e) => {
             e.preventDefault();
             netlifyIdentity.open();
-          }}>Login/signup</a>
+          }}>Login/signup</a>) : (
+            <a href="" onClick={(e) => {
+              e.preventDefault();
+              netlifyIdentity.logout();
+              setUser(null);
+            }}>Logout</a>
+          )}
+        </div>
+        <div>
+          <a href="" onClick={(e) => {
+            e.preventDefault();
+            fetch('/.netlify/functions/content', {
+              method: 'GET',
+              withCredentials: true,
+              credentials: 'include',
+              headers: {
+                  'Authorization': 'Bearer ' + (user ? user.token.access_token : ''),
+                  'Content-Type': 'application/json'
+              }
+            }).then(responseJson => {
+                console.log(responseJson);
+            })
+            .catch(error => this.setState({
+                isLoading: false,
+                message: 'Something bad happened ' + error
+            }));
+          }}>Test premium fetch</a>
         </div>
         <div>
           {count}
