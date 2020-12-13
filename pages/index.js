@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { useState, useEffect } from 'react';
+const netlifyIdentity = require('netlify-identity-widget');
 
 import { fetchEntries } from '@utils/contentfulPosts'
 
@@ -7,10 +8,17 @@ import Header from '@components/Header'
 import Footer from '@components/Footer'
 import Post from '@components/Post'
 
+
+
 export default function Home({ posts }) {
   var [count, setCount] = useState(0);
 
   useEffect(() => {
+    netlifyIdentity.init({
+      locale: 'en' // defaults to 'en'
+    });
+
+    netlifyIdentity.on('login', user => console.log('login', user));
     setInterval(() => {
       setCount(count++);
     }, 1000);
@@ -24,6 +32,12 @@ export default function Home({ posts }) {
 
       <main>
         <Header />
+        <div>
+          <a href="" onClick={(e) => {
+            e.preventDefault();
+            netlifyIdentity.open();
+          }}>Login/signup</a>
+        </div>
         <div>
           {count}
         </div>
