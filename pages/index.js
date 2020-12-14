@@ -79,7 +79,7 @@ export default function Home({ posts }) {
             return <Post key={p.date} date={p.date} image={p.image.fields} title={p.title} />
           })}
         </div>
-        <form netlify>
+        <form netlify name="test-form">
           <input name="name"></input>
           <input name="phone"></input>
           <input name="test"></input>
