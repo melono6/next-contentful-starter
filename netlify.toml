@@ -3,8 +3,15 @@
   functions = "api"
   publish = "out"
 
-  [[redirects]]
+[[redirects]]
   from = "/test"
+  to = "/test"
   status = 200
   force = false
   conditions = {Role = ["premium"]}
+
+[[redirects]]
+  from = "/test"
+  to = "/404
+  status = 404
+  force = false
