@@ -9,3 +9,9 @@
   status = 200
   force = false
   conditions = {Role = ["premium"]}
+
+[[redirects]]
+  from = "/oh"
+  to = "/fail"
+  status = 200
+  force = false

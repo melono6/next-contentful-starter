@@ -40,7 +40,7 @@ export default function Home({ posts }) {
       <main>
         <Header />
         <div>
-          SUCCESS
+         FAIL
         </div>
         <div>
           <a href="" onClick={(e) => {
