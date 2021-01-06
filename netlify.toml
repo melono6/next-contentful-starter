@@ -4,14 +4,8 @@
   publish = "out"
 
 [[redirects]]
-  from = "/test"
+  from = "/oh"
   to = "/test"
   status = 200
   force = false
   conditions = {Role = ["premium"]}
-
-[[redirects]]
-  from = "/test"
-  to = "/404"
-  status = 404
-  force = false
