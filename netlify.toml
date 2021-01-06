@@ -12,6 +12,6 @@
 
 [[redirects]]
   from = "/test"
-  to = "/404
+  to = "/404"
   status = 404
   force = false
