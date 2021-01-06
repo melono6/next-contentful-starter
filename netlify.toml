@@ -2,3 +2,9 @@
   command = "npm run build && npm run export"
   functions = "api"
   publish = "out"
+
+  [[redirects]]
+  from = "/test"
+  status = 200
+  force = false
+  conditions = {Role = ["premium"]}
