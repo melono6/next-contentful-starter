@@ -10,13 +10,6 @@
 	to = "/"
 	status = 200
 
-# if authenticated, access everything
-[[redirects]]
-	from = "/*"
-	status = 200
-	force = true
-	conditions = {Role = ["premium"]}
-
 # for everything else, you're pushed to the auth page with 401
 [[redirects]]
 	from = "/posts/premium/*"
