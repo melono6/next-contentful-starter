@@ -77,7 +77,7 @@ export default function Home({ posts }) {
         <div>
             {results.map((entry) => {
                 return (
-                    <div><strong>{entry.fields.articleTitle}</strong> - {entry.fields.articlebody}</div>
+                    <div><strong>{entry.fields.articleTitle}</strong> - {entry.fields.articlebody} - <a href={`/posts/${entry.fields.premium && 'premium/'}${entry.sys.id}`}>go to article</a></div>
                 )
             })}
         </div>
