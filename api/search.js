@@ -10,9 +10,11 @@ const client = require('contentful').createClient({
 exports.handler = async function(event, context) {
     // your server-side functionality
     const {identity, user} = context.clientContext;
+    const { queryStringParameters } = event;
 
     let filter = {
-        'content_type': 'testArticle'
+        'content_type': 'testArticle',
+        'query': queryStringParameters.query
     }
 
     if (!user) {

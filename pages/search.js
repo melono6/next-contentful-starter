@@ -29,7 +29,7 @@ export default function Home({ posts }) {
   }, []);
 
   function search (input) {
-    fetch('/.netlify/functions/search', {
+    fetch('/.netlify/functions/search?query='+input, {
         method: 'GET',
         withCredentials: true,
         credentials: 'include',
