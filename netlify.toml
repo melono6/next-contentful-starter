@@ -3,9 +3,23 @@
   functions = "api"
   publish = "out"
 
+
+# access auth page regardless of whether you're authenticated
 [[redirects]]
-  from = "/oh"
-  to = "/test"
-  status = 200
-  force = false
-  conditions = {Role = ["premium"]}
+	from = "/"
+	to = "/"
+	status = 200
+
+# if authenticated, access everything
+[[redirects]]
+	from = "/*"
+	status = 200
+	force = true
+	conditions = {Role = ["premium"]}
+
+# for everything else, you're pushed to the auth page with 401
+[[redirects]]
+	from = "/posts/premium/*"
+	to = "/"
+  status = 401
+	force = true
