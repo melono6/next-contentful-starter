@@ -67,7 +67,7 @@ export default function Home({ posts }) {
         </div>
         <div className="posts">
           {posts.map((p) => {
-            return <Post key={p.date} date={p.date} image={p.image.fields} title={p.title} />
+            // return <Post key={p.date} date={p.date} image={p.image.fields} title={p.title} />
           })}
         </div>
         <form name="contact" method="POST" data-netlify="true">
