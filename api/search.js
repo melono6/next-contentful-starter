@@ -20,15 +20,23 @@ exports.handler = async function(event, context) {
     }
 
     // logged in
-    client.getEntries(filter)
+    return client.getEntries(filter)
     .then(function (entries) {
         if (entries.items) {
             return {
                 statusCode: 200,
                 body: JSON.stringify({content: entries.items})
             }
+        } else {
+            return {
+                statusCode: 200,
+                body: JSON.stringify({content: []})
+            }
         }
     }).catch((e) => {
-        console.log(e);
+        return {
+            statusCode: 200,
+            body: JSON.stringify({content: 'fail'})
+        }
     })
 }
