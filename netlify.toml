@@ -13,6 +13,14 @@
 # for everything else, you're pushed to the auth page with 401
 [[redirects]]
 	from = "/posts/premium/*"
+	to = "/posts/premium/:splat"
+  status = 401
+	force = true
+  conditions = {Role = ["premium"]}
+
+# for everything else, you're pushed to the auth page with 401
+[[redirects]]
+	from = "/posts/premium/*"
 	to = "/"
   status = 401
 	force = true
