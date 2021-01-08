@@ -26,9 +26,6 @@ export default function Home({ posts }) {
       console.log('login', user)
       setUser(user);
     });
-    setInterval(() => {
-      setCount(count++);
-    }, 1000);
   }, []);
 
   function search (input) {
@@ -45,10 +42,9 @@ export default function Home({ posts }) {
       }).then((response) => {
           setResults(response.content)
       })
-      .catch(error => this.setState({
-          isLoading: false,
-          message: 'Something bad happened ' + error
-      }));
+      .catch((err) => {
+          console.log(err)
+      });
   }
 
   return (
@@ -76,7 +72,7 @@ export default function Home({ posts }) {
             <input type="text" id="search"/>
             <input type="button" value="search" onClick={() => {
                 search(document.querySelector('#search').value);
-            }}>
+            }}/>
         </div>
         <div>
             {results.map((entry) => {
