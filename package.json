@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node server.js",
     "build": "next build",
     "start": "next start",
     "export": "next export"
@@ -12,7 +12,9 @@
     "contentful": "^7.14.6",
     "netlify-identity-widget": "^1.9.1",
     "next": "9.5.4",
+    "next-routes": "^1.4.2",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "@zepp/epi": "git+https://gitlab+deploy-token-329027:Hu-NzWres5J8FEopCEty@gitlab.com/RufusLeonard/zepp"
   }
 }

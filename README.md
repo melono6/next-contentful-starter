@@ -1,36 +1,53 @@
-# Next + Contentful Starter
+# POC Netlify + Netlify-identity + Next.js + Contentful
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/e368a036-6f58-4f33-a414-473b23a3fd14/deploy-status)](https://app.netlify.com/sites/next-contentful-starter/deploys)
+##Covered in this POC:
+**1. Static deploy using next.js and netlify to host**
+Netlify links straight into github or gitlab repos. All that needs to be confirued is what commands to run for build and where the build assets output to. Can be configured to build every push to specific branch and auto-publish or cna preview before publish. easy rollbacks to previous builds.
 
-This is a [Next.js](https://nextjs.org/) v9.5.0 starter project with [Contentful](https://www.contentful.com/) and set up to be instantly deployed to [Netlify](https://url.netlify.com/Bk4UicocL)!
+**2. Login/Signup with netlify-idenity**
+using netlifys login widget for this: https://github.com/netlify/netlify-identity-widget if heavy customisation is requierd we would need to use the lower level api: https://github.com/netlify/gotrue-js
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/cassidoo/next-contentful-starter&utm_source=github&utm_medium=nextcontentful-cs&utm_campaign=devex)
+**3. looking at how netlify handles forms**
+adding a html-attribute into the html form, netlify will handle the form submission and sotring of form data for us.
 
-(If you click this button, it will create a new repo for you that looks exactly like this one, and sets that repo up immediately for deployment on Netlify)
+**4. Ability to use 1 contentful space while keeping some content behind authwall**
+added field "premium" as boolean to articles in contentful so they can be correctly tagged up.
+Public and private articles are then statically generated at build time with different url scheme to determine premium posts: eg /posts/* and /posts/premium/*
+then using role based redirects within netlify, we can hide premium urls unless user is logged in as a premium role (https://docs.netlify.com/visitor-access/role-based-access-control/)
 
-## Getting Started
+**5. Able to text-search against contentful content, results dependant on loggedin or out without keys being in FE code**
+Using netlify serverless functions + netlify-identity, we can set up functions that will take the users JWT as a bearer header and validate the user before connecting to contentful to request data. If the user is logged in, premium posts are also returned (https://docs.netlify.com/functions/functions-and-identity/)
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
+## Demo links:
+https://friendly-hugle-6dd81c.netlify.app/ - Here you can login/signup (NOTE: signing up wont give you access to premium posts, let me know if you want and i can set your login to 'premium' role after sign up)
+
+https://friendly-hugle-6dd81c.netlify.app/search - here you can search for articles created in contentful (need to be logged as a premium role for premium artiles to be displayed)
+
+https://friendly-hugle-6dd81c.netlify.app/posts/17yxe3n6sh28bphk2wmo8h - public post example
+
+https://friendly-hugle-6dd81c.netlify.app/posts/premium/3ftspjb1xxtekmtowdecpw - premium post example (will 404 if not logged in as premium user)
+
+
+## Local setup
+rename .env.example to .env
+
+add keys, my testig acount detials below:
+```
+FUNC_PRIVATE_CONTENTFUL_SPACE_ID=ieb3bcp5p39h
+FUNC_PRIVATE_CONTENTFUL_ACCESS_TOKEN=lIGEmCt62XgARAlDpBFBI0rIEeaaNvBc6qQVSrel7Cw
+NEXT_PUBLIC_CONTENTFUL_SPACE_ID=g2t0rmtsvrcd
+NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN=WzRvBJpadbS9coUgtPsvR2HpSabZjxvpo3Nbch7Z53M
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```
+npm i
+npm run dev
+```
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-### Installation options
-
-**Option one:** One-click deploy
-
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/cassidoo/next-contentful-starter&utm_source=github&utm_medium=nextcontentful-cs&utm_campaign=devex)
-
-**Option two:** Manual clone
-
-1. Clone this repo: `git clone https://github.com/cassidoo/next-contentful-starter.git`
-2. Navigate to the directory and run `npm run dev`
-3. Make your changes
-4. Connect to [Netlify](https://url.netlify.com/Bk4UicocL) manually (the `netlify.toml` file is the one you'll need to make sure stays intact to make sure the export is done and pointed to the right stuff)
+you can use netlify-dev to run instead which is useful as it allowed the severless functions to work as they would in live
+```
+npm install netlify-cli -g
+netlify dev
+```
+NOTE: seems to be a bug with the redirects in netlify-dev not working correctly, if using this comment out redirect rules in netlify.toml
