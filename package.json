@@ -15,6 +15,5 @@
     "next-routes": "^1.4.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "@zepp/epi": "git+https://gitlab+deploy-token-329027:Hu-NzWres5J8FEopCEty@gitlab.com/RufusLeonard/zepp"
   }
 }
